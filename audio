@@ -1,0 +1,45 @@
+#include <iostream>
+#include <string>
+#include <vector>
+#include <thread>
+#include <chrono>
+
+class AudioCall {
+public:
+    AudioCall(const std::string& caller, const std::string& receiver)
+        : caller(caller), receiver(receiver), isActive(false) {}
+
+    void startCall() {
+        isActive = true;
+        std::cout << "Call started between " << caller << " and " << receiver << std::endl;
+        simulateCall();
+    }
+
+    void endCall() {
+        isActive = false;
+        std::cout << "Call ended between " << caller << " and " << receiver << std::endl;
+    }
+
+private:
+    std::string caller;
+    std::string receiver;
+    bool isActive;
+
+    void simulateCall() {
+        while (isActive) {
+            std::this_thread::sleep_for(std::chrono::seconds(1));
+            std::cout << caller << ": Hello, can you hear me?" << std::endl;
+            std::cout << receiver << ": Yes, I can hear you!" << std::endl;
+        }
+    }
+};
+
+int main() {
+    AudioCall call("Alice", "Bob");
+    call.startCall();
+    
+    std::this_thread::sleep_for(std::chrono::seconds(5)); // Simulate call duration
+    call.endCall();
+
+    return 0;
+}

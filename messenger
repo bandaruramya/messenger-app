@@ -1,0 +1,49 @@
+#include <iostream>
+#include <string>
+#include <vector>
+#include <map>
+
+class Message {
+public:
+    std::string sender;
+    std::string receiver;
+    std::string content;
+
+    Message(std::string s, std::string r, std::string c) : sender(s), receiver(r), content(c) {}
+};
+
+class MessengerApp {
+private:
+    std::map<std::string, std::vector<Message>> conversations;
+
+public:
+    void sendMessage(const std::string& sender, const std::string& receiver, const std::string& content) {
+        Message message(sender, receiver, content);
+        conversations[receiver].push_back(message);
+        std::cout << "Message sent from " << sender << " to " << receiver << ": " << content << std::endl;
+    }
+
+    void viewMessages(const std::string& user) {
+        if (conversations.find(user) != conversations.end()) {
+            std::cout << "Messages for " << user << ":\n";
+            for (const auto& message : conversations[user]) {
+                std::cout << message.sender << ": " << message.content << std::endl;
+            }
+        } else {
+            std::cout << "No messages for " << user << std::endl;
+        }
+    }
+};
+
+int main() {
+    MessengerApp app;
+    app.sendMessage("Alice", "Bob", "Hello Bob!");
+    app.sendMessage("Bob", "Alice", "Hi Alice!");
+    app.viewMessages("Alice");
+    app.viewMessages("Bob");
+
+    return 0;
+}
+ 
+ 
+

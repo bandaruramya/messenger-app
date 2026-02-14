@@ -1,0 +1,33 @@
+#include <iostream>
+#include <string>
+#include <thread>
+#include <chrono>
+
+class VideoCall {
+public:
+    void startCall(const std::string& participant) {
+        std::cout << "Starting video call with " << participant << "..." << std::endl;
+        std::this_thread::sleep_for(std::chrono::seconds(2));
+        std::cout << "Video call with " << participant << " is now live!" << std::endl;
+    }
+
+    void endCall() {
+        std::cout << "Ending the video call..." << std::endl;
+        std::this_thread::sleep_for(std::chrono::seconds(1));
+        std::cout << "Video call has ended." << std::endl;
+    }
+};
+
+int main() {
+    VideoCall call;
+    std::string participant;
+
+    std::cout << "Enter the name of the participant: ";
+    std::getline(std::cin, participant);
+
+    call.startCall(participant);
+    std::this_thread::sleep_for(std::chrono::seconds(5)); // Simulate call duration
+    call.endCall();
+
+    return 0;
+}
